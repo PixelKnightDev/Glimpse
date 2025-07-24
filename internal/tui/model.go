@@ -60,7 +60,7 @@ var (
 			Bold(true)
 )
 
-const visibleItems = 6 // How many results to show at once
+const visibleItems = 6
 
 type Model struct {
 	searchInput     textinput.Model

@@ -34,12 +34,11 @@ func main() {
 
 	args := flag.Args()
 
-	// If CLI mode is explicitly requested AND has search term
 	if *cliMode && len(args) > 0 {
 		searchTerm := args[0]
 		options := search.SearchOptions{
 			CaseInsensitive: *caseInsensitive,
-			MaxResults:      0, // No limit for CLI mode
+			MaxResults:      0,
 		}
 
 		results := search.SearchFiles(searchTerm, ".", options)
@@ -54,34 +53,30 @@ func main() {
 		return
 	}
 
-	// Default: Launch interactive TUI mode
 	model := tui.InitialModel()
 	p := tea.NewProgram(model)
-	
+
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Error: %v", err)
 		os.Exit(1)
 	}
-	
-	// Clear the terminal after TUI exits
+
 	clearTerminal()
 }
 
-// Clear terminal screen across different operating systems
 func clearTerminal() {
 	var cmd *exec.Cmd
-	
+
 	switch runtime.GOOS {
-	case "linux", "darwin": // Linux and macOS
+	case "linux", "darwin":
 		cmd = exec.Command("clear")
 	case "windows":
 		cmd = exec.Command("cmd", "/c", "cls")
 	default:
-		// Fallback: print ANSI escape sequence
 		fmt.Print("\033[2J\033[H")
 		return
 	}
-	
+
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }

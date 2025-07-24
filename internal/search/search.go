@@ -22,11 +22,10 @@ type SearchOptions struct {
 func SearchFiles(pattern string, dir string, options SearchOptions) []Result {
 	var results []Result
 	var mutex sync.Mutex
-	
-	// Reasonable limits for good speed + results
+
 	maxResults := options.MaxResults
 	if maxResults == 0 {
-		maxResults = 50 // Back to reasonable default
+		maxResults = 50
 	}
 
 	filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
@@ -36,15 +35,13 @@ func SearchFiles(pattern string, dir string, options SearchOptions) []Result {
 
 		if info.IsDir() {
 			name := info.Name()
-			// Skip common build/cache directories but not too aggressive
-			if name == ".git" || name == "node_modules" || name == ".vscode" || 
-			   name == "target" || name == "build" || name == "dist" {
+			if name == ".git" || name == "node_modules" || name == ".vscode" ||
+				name == "target" || name == "build" || name == "dist" {
 				return filepath.SkipDir
 			}
 			return nil
 		}
 
-		// Check if we have enough results
 		mutex.Lock()
 		if len(results) >= maxResults {
 			mutex.Unlock()
@@ -52,13 +49,12 @@ func SearchFiles(pattern string, dir string, options SearchOptions) []Result {
 		}
 		mutex.Unlock()
 
-		// Quick binary check
 		if isBinaryFile(path) {
 			return nil
 		}
 
 		fileResults := searchFile(pattern, path, options)
-		
+
 		mutex.Lock()
 		results = append(results, fileResults...)
 		if len(results) > maxResults {
@@ -90,7 +86,6 @@ func searchFile(pattern string, filename string, options SearchOptions) []Result
 	lineNumber := 1
 
 	for scanner.Scan() {
-		// Reasonable limit per file
 		if len(results) >= 5 {
 			break
 		}
@@ -116,7 +111,6 @@ func searchFile(pattern string, filename string, options SearchOptions) []Result
 }
 
 func isBinaryFile(filename string) bool {
-	// Quick check by extension first
 	ext := strings.ToLower(filepath.Ext(filename))
 	binaryExts := []string{
 		".exe", ".dll", ".so", ".dylib", ".a", ".o",
@@ -124,14 +118,13 @@ func isBinaryFile(filename string) bool {
 		".pdf", ".zip", ".tar", ".gz", ".7z",
 		".mp3", ".mp4", ".avi", ".mov",
 	}
-	
+
 	for _, binaryExt := range binaryExts {
 		if ext == binaryExt {
 			return true
 		}
 	}
 
-	// Quick null byte check with small buffer
 	file, err := os.Open(filename)
 	if err != nil {
 		return true
