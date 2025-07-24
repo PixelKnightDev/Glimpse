@@ -2,7 +2,7 @@
 
 A lightning-fast, beautiful terminal-based code search tool with real-time results and instant editor integration.
 
-![Glimpse Demo](https://via.placeholder.com/800x500/1a1a1a/ffffff?text=Glimpse+Demo+Screenshot)
+<img width="971" height="374" alt="Screenshot 2025-07-24 at 9 07 17 PM" src="https://github.com/user-attachments/assets/067860aa-4c12-45b7-8609-79ea3efc8b40" />
 
 ## ✨ Features
 
@@ -12,7 +12,7 @@ A lightning-fast, beautiful terminal-based code search tool with real-time resul
 - **🎯 Instant Editor Integration** - Press Enter to open files in VS Code, Vim, or your preferred editor
 - **📱 Responsive Design** - Clean, compact interface that works in any terminal size
 - **🔧 Smart Filtering** - Automatically skips binary files and build directories
-- **⌨️ Vim-like Navigation** - Use j/k or arrow keys for navigation
+- **⌨️ Vim-like Navigation** - Use ctrl+j/ctrl+k or arrow keys for navigation
 - **🔤 Case Toggle** - Ctrl+I to switch between case-sensitive and case-insensitive search
 - **🧹 Auto-cleanup** - Clears terminal after use for a clean workspace
 
@@ -43,7 +43,7 @@ go build -o glimpse cmd/main.go
 cp glimpse $(go env GOPATH)/bin/
 ```
 
-### Install directly (once published)
+### Install directly
 ```bash
 go install github.com/pixelknightdev/glimpse@latest
 ```
@@ -102,7 +102,7 @@ glimpse --cli -i "search term"
 │                                │  │ 💡 Press ENTER to open        │
 └────────────────────────────────┘  └───────────────────────────────┘
 
-↑/↓: Navigate   Enter: Open   q: Quit   Ctrl+I: Toggle Case
+↑/↓: Navigate   Enter: Open   ctrl+c: Quit   Ctrl+I: Toggle Case
 ```
 
 ## 🛠 Technical Details
