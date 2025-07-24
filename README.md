@@ -37,7 +37,7 @@ Traditional tools like `grep` and `find` are powerful but:
 
 ### Install from source
 ```bash
-git clone https://github.com/yourusername/glimpse.git
+git clone https://github.com/pixelknightdev/glimpse.git
 cd glimpse
 go build -o glimpse cmd/main.go
 cp glimpse $(go env GOPATH)/bin/
@@ -45,7 +45,7 @@ cp glimpse $(go env GOPATH)/bin/
 
 ### Install directly (once published)
 ```bash
-go install github.com/yourusername/glimpse@latest
+go install github.com/pixelknightdev/glimpse@latest
 ```
 
 ## 📖 Usage
@@ -57,9 +57,9 @@ glimpse
 
 # Then:
 # - Type to search in real-time
-# - Use ↑/↓ or j/k to navigate results
+# - Use ↑/↓ or ctrl+j/ctrl+k to navigate results
 # - Press Enter to open file in editor
-# - Press q to quit
+# - Press ctrl+c to quit
 ```
 
 ### CLI Mode
@@ -76,10 +76,10 @@ glimpse --cli -i "search term"
 | Key | Action |
 |-----|--------|
 | `Type` | Search in real-time |
-| `↑/↓` or `j/k` | Navigate through results |
+| `↑/↓` or `ctrl+j/ctrl+k` | Navigate through results |
 | `Enter` | Open selected file in editor |
 | `Ctrl+I` | Toggle case sensitivity |
-| `q` or `Ctrl+C` | Quit |
+| `Ctrl+C` | Quit |
 
 ## 🎨 Interface Overview
 
@@ -89,17 +89,17 @@ glimpse --cli -i "search term"
 🔎 Search: your search term here
 
 ┌─ Results ──────────────────────┐  ┌─ Preview ─────────────────────┐
-│ 📊 Results 1-6 of 15:          │  │ 📁 src/main.go                │
+│ 📊 Results 1-6 of 15:          │   │ 📁 src/main.go                │
 │                                │  │ 📍 Line 42                    │
 │ ▶ src/main.go:42               │  │                               │
 │   src/utils.go:15              │  │ 🔍 CONTEXT:                   │
 │   tests/app_test.go:23         │  │ ──────────────────────────    │
-│   ...                          │  │  41 | func main() {          │
-│                                │  │ >42 | func searchFiles() {   │
-│                                │  │  43 |   return results       │
+│   ...                          │  │  41 | func main() {           │
+│                                │  │ >42 | func searchFiles() {    │
+│                                │  │  43 |   return results        │
 │                                │  │ ──────────────────────────    │
 │                                │  │                               │
-│                                │  │ 💡 Press ENTER to open       │
+│                                │  │ 💡 Press ENTER to open        │
 └────────────────────────────────┘  └───────────────────────────────┘
 
 ↑/↓: Navigate   Enter: Open   q: Quit   Ctrl+I: Toggle Case
