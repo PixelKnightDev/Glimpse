@@ -154,7 +154,7 @@ We welcome contributions! Here are some ways to help:
 
 ### Development Setup
 ```bash
-git clone https://github.com/yourusername/glimpse.git
+git clone https://github.com/pixelknightdev/glimpse.git
 cd glimpse
 go mod tidy
 go run cmd/main.go
@@ -194,13 +194,13 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/glimpse&type=Date)](https://star-history.com/#yourusername/glimpse&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=pixelknightdev/glimpse&type=Date)](https://star-history.com/#pixelknightdev/glimpse&Date)
 
 ---
 
 <div align="center">
 
-**[⭐ Star us on GitHub](https://github.com/yourusername/glimpse)** • **[🐛 Report Issues](https://github.com/yourusername/glimpse/issues)** • **[💡 Request Features](https://github.com/yourusername/glimpse/issues)**
+**[⭐ Star us on GitHub](https://github.com/pixelknightdev/glimpse)** • **[🐛 Report Issues](https://github.com/pixelknightdev/glimpse/issues)** • **[💡 Request Features](https://github.com/pixelknightdev/glimpse/issues)**
 
 Made with ❤️ by developers, for developers
 
