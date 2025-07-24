@@ -2,7 +2,7 @@
 
 A lightning-fast, beautiful terminal-based code search tool with real-time results and instant editor integration.
 
-![Glimpse Demo](https://via.placeholder.com/800x500/1a1a1a/ffffff?text=Glimpse+Demo+Screenshot)
+<img width="971" height="374" alt="Screenshot 2025-07-24 at 9 07 17 PM" src="https://github.com/user-attachments/assets/067860aa-4c12-45b7-8609-79ea3efc8b40" />
 
 ## ✨ Features
 
@@ -12,7 +12,7 @@ A lightning-fast, beautiful terminal-based code search tool with real-time resul
 - **🎯 Instant Editor Integration** - Press Enter to open files in VS Code, Vim, or your preferred editor
 - **📱 Responsive Design** - Clean, compact interface that works in any terminal size
 - **🔧 Smart Filtering** - Automatically skips binary files and build directories
-- **⌨️ Vim-like Navigation** - Use j/k or arrow keys for navigation
+- **⌨️ Vim-like Navigation** - Use ctrl+j/ctrl+k or arrow keys for navigation
 - **🔤 Case Toggle** - Ctrl+I to switch between case-sensitive and case-insensitive search
 - **🧹 Auto-cleanup** - Clears terminal after use for a clean workspace
 
@@ -37,15 +37,15 @@ Traditional tools like `grep` and `find` are powerful but:
 
 ### Install from source
 ```bash
-git clone https://github.com/yourusername/glimpse.git
+git clone https://github.com/pixelknightdev/glimpse.git
 cd glimpse
 go build -o glimpse cmd/main.go
 cp glimpse $(go env GOPATH)/bin/
 ```
 
-### Install directly (once published)
+### Install directly
 ```bash
-go install github.com/yourusername/glimpse@latest
+go install github.com/pixelknightdev/glimpse@latest
 ```
 
 ## 📖 Usage
@@ -57,9 +57,9 @@ glimpse
 
 # Then:
 # - Type to search in real-time
-# - Use ↑/↓ or j/k to navigate results
+# - Use ↑/↓ or ctrl+j/ctrl+k to navigate results
 # - Press Enter to open file in editor
-# - Press q to quit
+# - Press ctrl+c to quit
 ```
 
 ### CLI Mode
@@ -76,10 +76,10 @@ glimpse --cli -i "search term"
 | Key | Action |
 |-----|--------|
 | `Type` | Search in real-time |
-| `↑/↓` or `j/k` | Navigate through results |
+| `↑/↓` or `ctrl+j/ctrl+k` | Navigate through results |
 | `Enter` | Open selected file in editor |
 | `Ctrl+I` | Toggle case sensitivity |
-| `q` or `Ctrl+C` | Quit |
+| `Ctrl+C` | Quit |
 
 ## 🎨 Interface Overview
 
@@ -89,20 +89,20 @@ glimpse --cli -i "search term"
 🔎 Search: your search term here
 
 ┌─ Results ──────────────────────┐  ┌─ Preview ─────────────────────┐
-│ 📊 Results 1-6 of 15:          │  │ 📁 src/main.go                │
+│ 📊 Results 1-6 of 15:          │   │ 📁 src/main.go                │
 │                                │  │ 📍 Line 42                    │
 │ ▶ src/main.go:42               │  │                               │
 │   src/utils.go:15              │  │ 🔍 CONTEXT:                   │
 │   tests/app_test.go:23         │  │ ──────────────────────────    │
-│   ...                          │  │  41 | func main() {          │
-│                                │  │ >42 | func searchFiles() {   │
-│                                │  │  43 |   return results       │
+│   ...                          │  │  41 | func main() {           │
+│                                │  │ >42 | func searchFiles() {    │
+│                                │  │  43 |   return results        │
 │                                │  │ ──────────────────────────    │
 │                                │  │                               │
-│                                │  │ 💡 Press ENTER to open       │
+│                                │  │ 💡 Press ENTER to open        │
 └────────────────────────────────┘  └───────────────────────────────┘
 
-↑/↓: Navigate   Enter: Open   q: Quit   Ctrl+I: Toggle Case
+↑/↓: Navigate   Enter: Open   ctrl+c: Quit   Ctrl+I: Toggle Case
 ```
 
 ## 🛠 Technical Details
@@ -154,7 +154,7 @@ We welcome contributions! Here are some ways to help:
 
 ### Development Setup
 ```bash
-git clone https://github.com/yourusername/glimpse.git
+git clone https://github.com/pixelknightdev/glimpse.git
 cd glimpse
 go mod tidy
 go run cmd/main.go
@@ -194,13 +194,13 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/glimpse&type=Date)](https://star-history.com/#yourusername/glimpse&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=pixelknightdev/glimpse&type=Date)](https://star-history.com/#pixelknightdev/glimpse&Date)
 
 ---
 
 <div align="center">
 
-**[⭐ Star us on GitHub](https://github.com/yourusername/glimpse)** • **[🐛 Report Issues](https://github.com/yourusername/glimpse/issues)** • **[💡 Request Features](https://github.com/yourusername/glimpse/issues)**
+**[⭐ Star us on GitHub](https://github.com/pixelknightdev/glimpse)** • **[🐛 Report Issues](https://github.com/pixelknightdev/glimpse/issues)** • **[💡 Request Features](https://github.com/pixelknightdev/glimpse/issues)**
 
 Made with ❤️ by developers, for developers
 
