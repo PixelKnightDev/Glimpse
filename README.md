@@ -15,6 +15,7 @@ A lightning-fast, beautiful terminal-based code search tool with real-time resul
 - **⌨️ Vim-like Navigation** - Use ctrl+j/ctrl+k or arrow keys for navigation
 - **🔤 Case Toggle** - Ctrl+I to switch between case-sensitive and case-insensitive search
 - **🧹 Auto-cleanup** - Clears terminal after use for a clean workspace
+  
   heavily inspired by https://github.com/nvim-telescope/telescope.nvim
 
 ## 🎯 Why Glimpse?
