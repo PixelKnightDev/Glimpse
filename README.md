@@ -15,6 +15,8 @@ A lightning-fast, beautiful terminal-based code search tool with real-time resul
 - **⌨️ Vim-like Navigation** - Use ctrl+j/ctrl+k or arrow keys for navigation
 - **🔤 Case Toggle** - Ctrl+I to switch between case-sensitive and case-insensitive search
 - **🧹 Auto-cleanup** - Clears terminal after use for a clean workspace
+  
+  heavily inspired by https://github.com/nvim-telescope/telescope.nvim
 
 ## 🎯 Why Glimpse?
 
@@ -81,29 +83,13 @@ glimpse --cli -i "search term"
 | `Ctrl+I` | Toggle case sensitivity |
 | `Ctrl+C` | Quit |
 
-## 🎨 Interface Overview
+## 🎨 Video demo
 
-```
-🔍 GLIMPSE - Interactive Code Search    Mode: CASE-INSENSITIVE
 
-🔎 Search: your search term here
 
-┌─ Results ──────────────────────┐  ┌─ Preview ─────────────────────┐
-│ 📊 Results 1-6 of 15:          │   │ 📁 src/main.go                │
-│                                │  │ 📍 Line 42                    │
-│ ▶ src/main.go:42               │  │                               │
-│   src/utils.go:15              │  │ 🔍 CONTEXT:                   │
-│   tests/app_test.go:23         │  │ ──────────────────────────    │
-│   ...                          │  │  41 | func main() {           │
-│                                │  │ >42 | func searchFiles() {    │
-│                                │  │  43 |   return results        │
-│                                │  │ ──────────────────────────    │
-│                                │  │                               │
-│                                │  │ 💡 Press ENTER to open        │
-└────────────────────────────────┘  └───────────────────────────────┘
+https://github.com/user-attachments/assets/48c9256d-5faf-45b8-b541-4ab7fbe473a3
 
-↑/↓: Navigate   Enter: Open   ctrl+c: Quit   Ctrl+I: Toggle Case
-```
+
 
 ## 🛠 Technical Details
 
