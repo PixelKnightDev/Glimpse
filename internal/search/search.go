@@ -1,3 +1,9 @@
+/*
+ * Glimpse - Search Engine Module
+ * Author: Pratyush Yadav <pratyushyadav0106@gmail.com>
+ * Description: Core search functionality with file traversal and pattern matching
+ * License: MIT License
+ */
 package search
 
 import (

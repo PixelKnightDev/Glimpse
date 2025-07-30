@@ -1,3 +1,9 @@
+/*
+ * Glimpse - Editor Integration Module
+ * Author: Pratyush Yadav <pratyushyadav0106@gmail.com>
+ * Description: Cross-platform editor integration for opening files at specific lines
+ * License: MIT License
+ */
 package tui
 
 import (

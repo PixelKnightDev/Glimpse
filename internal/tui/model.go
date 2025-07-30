@@ -1,3 +1,9 @@
+/*
+ * Glimpse - Terminal User Interface Module
+ * Author: Pratyush Yadav <pratyushyadav0106@gmail.com>
+ * Description: Interactive TUI implementation using Bubbletea framework
+ * License: MIT License
+ */
 package tui
 
 import (

@@ -1,3 +1,9 @@
+/*
+ * Glimpse - Interactive Code Search Tool
+ * Author: Pratyush Yadav <pratyushyadav0106@gmail.com>
+ * Description: Main entry point and CLI interface for Glimpse interactive code search
+ * License: MIT License
+ */
 package main
 
 import (
