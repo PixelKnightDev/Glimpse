@@ -76,6 +76,7 @@ type Model struct {
 	preview         viewport.Model
 	caseInsensitive bool
 	lastMessage     string
+	index           *search.Index // Added for in-memory search index
 }
 
 func InitialModel() Model {
@@ -94,7 +95,15 @@ func InitialModel() Model {
 		caseInsensitive: true,
 		scrollOffset:    0,
 		lastMessage:     "",
+		index:           nil,
 	}
+}
+
+// InitialModelWithIndex creates a Model with an in-memory index for fast searching
+func InitialModelWithIndex(index *search.Index) Model {
+	m := InitialModel()
+	m.index = index
+	return m
 }
 
 func (m Model) Init() tea.Cmd {
@@ -116,7 +125,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.lastMessage = "🔧 Switched to " + statusText + " mode"
 			if query := m.searchInput.Value(); query != "" {
 				options := search.SearchOptions{CaseInsensitive: m.caseInsensitive, MaxResults: 50}
-				m.results = search.SearchFiles(query, ".", options)
+				if m.index != nil {
+					m.results = m.index.Search(query, options)
+				} else {
+					m.results = search.SearchFiles(query, ".", options)
+				}
 				m.selectedIndex = 0
 				m.scrollOffset = 0
 				m.updatePreview()
@@ -148,7 +161,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			query := m.searchInput.Value()
 			if query != "" {
 				options := search.SearchOptions{CaseInsensitive: m.caseInsensitive, MaxResults: 50}
-				m.results = search.SearchFiles(query, ".", options)
+				if m.index != nil {
+					m.results = m.index.Search(query, options)
+				} else {
+					m.results = search.SearchFiles(query, ".", options)
+				}
 				m.selectedIndex = 0
 				m.scrollOffset = 0
 				m.updatePreview()

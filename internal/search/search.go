@@ -55,7 +55,7 @@ func SearchFiles(pattern string, dir string, options SearchOptions) []Result {
 		}
 		mutex.Unlock()
 
-		if isBinaryFile(path) {
+		if IsBinaryFile(path) {
 			return nil
 		}
 
@@ -116,7 +116,7 @@ func searchFile(pattern string, filename string, options SearchOptions) []Result
 	return results
 }
 
-func isBinaryFile(filename string) bool {
+func IsBinaryFile(filename string) bool {
 	ext := strings.ToLower(filepath.Ext(filename))
 	binaryExts := []string{
 		".exe", ".dll", ".so", ".dylib", ".a", ".o",

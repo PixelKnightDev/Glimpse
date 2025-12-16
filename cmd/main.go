@@ -9,9 +9,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"runtime"
+	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/pixelknightdev/glimpse/internal/search"
@@ -40,6 +42,7 @@ func main() {
 
 	args := flag.Args()
 
+	// CLI MODE - No indexing
 	if *cliMode && len(args) > 0 {
 		searchTerm := args[0]
 		options := search.SearchOptions{
@@ -59,12 +62,31 @@ func main() {
 		return
 	}
 
-	model := tui.InitialModel()
-	p := tea.NewProgram(model)
+	// TUI mode: Build index for fast searching
+	clearTerminal()
 
+	fmt.Println("\n🔍 Indexing project...")
+	fmt.Println("This will make searches instant!\n")
+
+	progressCallback := func(current, total int) {
+		if total > 0 {
+			percentage := (current * 100) / total
+			fmt.Printf("\r  📂 Indexed %d/%d files (%d%%)  ", current, total, percentage)
+		}
+	}
+
+	index := search.BuildIndex(".", progressCallback)
+
+	fmt.Printf("\r✓ Indexed %d files successfully!       \n", index.FileCount())
+	fmt.Println("\n🚀 Starting interactive search...\n")
+	time.Sleep(1 * time.Second)
+
+	// Create model with index
+	model := tui.InitialModelWithIndex(index)
+
+	p := tea.NewProgram(model)
 	if _, err := p.Run(); err != nil {
-		fmt.Printf("Error: %v", err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
 	clearTerminal()
