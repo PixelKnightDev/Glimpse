@@ -65,8 +65,8 @@ func main() {
 	// TUI mode: Build index for fast searching
 	clearTerminal()
 
-	fmt.Println("\n🔍 Indexing project...")
-	fmt.Println("This will make searches instant!\n")
+	fmt.Println("\n Glimpse loading...")
+	// fmt.Println("This will make searches instant!\n")
 
 	progressCallback := func(current, total int) {
 		if total > 0 {
@@ -77,8 +77,8 @@ func main() {
 
 	index := search.BuildIndex(".", progressCallback)
 
-	fmt.Printf("\r✓ Indexed %d files successfully!       \n", index.FileCount())
-	fmt.Println("\n🚀 Starting interactive search...\n")
+	// fmt.Printf("\r✓ Indexed %d files successfully!       \n", index.FileCount())
+	// fmt.Println("\n🚀 Starting interactive search...\n")
 	time.Sleep(1 * time.Second)
 
 	// Create model with index

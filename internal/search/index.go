@@ -18,7 +18,8 @@ import (
 // FileEntry represents a single indexed file with its content
 type FileEntry struct {
 	Path    string    // File path
-	Content []string  // File lines
+	Content []string  // File lines (original)
+	Lower   []string  // File lines (lowercase for fast case-insensitive search)
 	ModTime time.Time // Last modification time
 }
 
@@ -29,16 +30,16 @@ type Index struct {
 }
 
 // BuildIndex creates an index of all text files in the given directory
-// progressCallback is called with (current, total) during indexing
+// progressCallback is called with current and total during indexing
 func BuildIndex(dir string, progressCallback func(current, total int)) *Index {
 	index := &Index{
 		files: make(map[string]*FileEntry),
 	}
 
-	// First pass: count total files for progress reporting
+	// First pass count total files for progress reporting
 	totalFiles := countFiles(dir)
 
-	// Second pass: index all files
+	// Second pass index all files
 	currentCount := 0
 
 	filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
@@ -50,7 +51,9 @@ func BuildIndex(dir string, progressCallback func(current, total int)) *Index {
 		if info.IsDir() {
 			name := info.Name()
 			if name == ".git" || name == "node_modules" || name == ".vscode" ||
-				name == "target" || name == "build" || name == "dist" {
+				name == "target" || name == "build" || name == "dist" ||
+				name == "venv" || name == ".venv" || name == "env" || name == ".env" ||
+				name == "__pycache__" || name == ".pytest_cache" || name == "site-packages" {
 				return filepath.SkipDir
 			}
 			return nil
@@ -89,7 +92,9 @@ func countFiles(dir string) int {
 		if info.IsDir() {
 			name := info.Name()
 			if name == ".git" || name == "node_modules" || name == ".vscode" ||
-				name == "target" || name == "build" || name == "dist" {
+				name == "target" || name == "build" || name == "dist" ||
+				name == "venv" || name == ".venv" || name == "env" || name == ".env" ||
+				name == "__pycache__" || name == ".pytest_cache" || name == "site-packages" {
 				return filepath.SkipDir
 			}
 			return nil
@@ -121,9 +126,12 @@ func (idx *Index) addFile(path string) error {
 	}
 
 	var lines []string
+	var lower []string
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
+		line := scanner.Text()
+		lines = append(lines, line)
+		lower = append(lower, strings.ToLower(line))
 	}
 
 	if err := scanner.Err(); err != nil {
@@ -136,6 +144,7 @@ func (idx *Index) addFile(path string) error {
 	idx.files[path] = &FileEntry{
 		Path:    path,
 		Content: lines,
+		Lower:   lower,
 		ModTime: info.ModTime(),
 	}
 
@@ -167,21 +176,22 @@ func (idx *Index) Search(pattern string, options SearchOptions) []Result {
 
 		// Search within this file (max 5 results per file)
 		fileResults := 0
-		for lineNum, line := range entry.Content {
+		for lineNum := 0; lineNum < len(entry.Content); lineNum++ {
 			if fileResults >= 5 {
 				break
 			}
 
-			searchLine := line
+			// Use pre-lowercased content for case-insensitive search (was causing big lag without)
+			searchLine := entry.Content[lineNum]
 			if options.CaseInsensitive {
-				searchLine = strings.ToLower(line)
+				searchLine = entry.Lower[lineNum]
 			}
 
 			if strings.Contains(searchLine, searchPattern) {
 				results = append(results, Result{
 					File:    entry.Path,
-					Line:    lineNum + 1, // Line numbers are 1-indexed
-					Content: line,
+					Line:    lineNum + 1, //  because line numbers are 1-indexed
+					Content: entry.Content[lineNum],
 				})
 				fileResults++
 			}
@@ -201,4 +211,16 @@ func (idx *Index) FileCount() int {
 	idx.mu.RLock()
 	defer idx.mu.RUnlock()
 	return len(idx.files)
+}
+
+// returns the cached content lines for a file
+// Returns nil if file not found in index
+func (idx *Index) GetFileContent(filename string) []string {
+	idx.mu.RLock()
+	defer idx.mu.RUnlock()
+
+	if entry, exists := idx.files[filename]; exists {
+		return entry.Content
+	}
+	return nil
 }

@@ -241,6 +241,27 @@ func (m *Model) updatePreview() {
 }
 
 func (m *Model) getFileContext(filename string, targetLine int, contextSize int) []string {
+	// First try to get from index cache
+	if m.index != nil {
+		if cachedContent := m.index.GetFileContent(filename); cachedContent != nil {
+			// Extract context from cached content
+			startLine := targetLine - contextSize
+			if startLine < 1 {
+				startLine = 1
+			}
+			endLine := targetLine + contextSize
+
+			var lines []string
+			for i := startLine - 1; i < len(cachedContent) && i < endLine; i++ {
+				if i >= 0 {
+					lines = append(lines, cachedContent[i])
+				}
+			}
+			return lines
+		}
+	}
+
+	// Fallback- read from disk if not in index
 	file, err := os.Open(filename)
 	if err != nil {
 		return []string{}
