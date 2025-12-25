@@ -16,8 +16,8 @@ import (
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/pixelknightdev/glimpse/internal/search"
-	"github.com/pixelknightdev/glimpse/internal/tui"
+	"github.com/pixelknightdev/Glimpse/internal/search"
+	"github.com/pixelknightdev/Glimpse/internal/tui"
 )
 
 func main() {

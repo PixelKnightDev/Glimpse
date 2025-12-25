@@ -39,7 +39,7 @@ Traditional tools like `grep` and `find` are powerful but:
 
 ### Install from source
 ```bash
-git clone https://github.com/pixelknightdev/glimpse.git
+git clone https://github.com/pixelknightdev/Glimpse.git
 cd glimpse
 go build -o glimpse cmd/main.go
 cp glimpse $(go env GOPATH)/bin/
@@ -47,7 +47,7 @@ cp glimpse $(go env GOPATH)/bin/
 
 ### Install directly
 ```bash
-go install github.com/pixelknightdev/glimpse@latest
+go install github.com/pixelknightdev/Glimpse/cmd/gimpse@latest
 ```
 
 ## 📖 Usage
@@ -140,7 +140,7 @@ We welcome contributions! Here are some ways to help:
 
 ### Development Setup
 ```bash
-git clone https://github.com/pixelknightdev/glimpse.git
+git clone https://github.com/pixelknightdev/Glimpse.git
 cd glimpse
 go mod tidy
 go run cmd/main.go
