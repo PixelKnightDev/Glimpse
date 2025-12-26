@@ -12,11 +12,11 @@ import (
 	"os"
 	"strings"
 
+	"github.com/PixelKnightDev/Glimpse/internal/search"
 	"github.com/charmbracelet/bubbles/textinput"
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/pixelknightdev/Glimpse/internal/search"
 )
 
 var (

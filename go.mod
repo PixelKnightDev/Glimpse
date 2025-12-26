@@ -1,4 +1,4 @@
-module github.com/pixelknightdev/Glimpse
+module github.com/PixelKnightDev/Glimpse
 
 go 1.24.4
 

@@ -15,9 +15,9 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/PixelKnightDev/Glimpse/internal/search"
+	"github.com/PixelKnightDev/Glimpse/internal/tui"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/pixelknightdev/Glimpse/internal/search"
-	"github.com/pixelknightdev/Glimpse/internal/tui"
 )
 
 func main() {
