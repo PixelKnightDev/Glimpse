@@ -1,0 +1,110 @@
+/*
+ * Glimpse - Interactive Code Search Tool
+ * Author: Pratyush Yadav <pratyushyadav0106@gmail.com>
+ * Description: Main entry point and CLI interface for Glimpse interactive code search
+ * License: MIT License
+ */
+package main
+
+import (
+	"flag"
+	"fmt"
+	"log"
+	"os"
+	"os/exec"
+	"runtime"
+	"time"
+
+	"github.com/PixelKnightDev/Glimpse/internal/search"
+	"github.com/PixelKnightDev/Glimpse/internal/tui"
+	tea "github.com/charmbracelet/bubbletea"
+)
+
+func main() {
+	var caseInsensitive = flag.Bool("i", false, "Case insensitive search")
+	var help = flag.Bool("h", false, "Show help")
+	var cliMode = flag.Bool("cli", false, "Force CLI mode instead of interactive TUI")
+
+	flag.Parse()
+
+	if *help {
+		fmt.Println("🔍 Glimpse - Interactive Code Search")
+		fmt.Println("\nUsage:")
+		fmt.Println("  glimpse                    # Interactive TUI mode (default)")
+		fmt.Println("  glimpse --cli <term>       # CLI mode")
+		fmt.Println("  glimpse -i <term>          # Case insensitive CLI search")
+		fmt.Println("\nFlags:")
+		flag.PrintDefaults()
+		fmt.Println("\nTUI Controls:")
+		fmt.Println("  Type to search, ↑/↓ navigate, Enter to open, q to quit")
+		return
+	}
+
+	args := flag.Args()
+
+	// CLI MODE - No indexing
+	if *cliMode && len(args) > 0 {
+		searchTerm := args[0]
+		options := search.SearchOptions{
+			CaseInsensitive: *caseInsensitive,
+			MaxResults:      0,
+		}
+
+		results := search.SearchFiles(searchTerm, ".", options)
+
+		for _, result := range results {
+			fmt.Printf("%s:%d: %s\n", result.File, result.Line, result.Content)
+		}
+
+		if len(results) == 0 {
+			fmt.Println("No matches found")
+		}
+		return
+	}
+
+	// TUI mode: Build index for fast searching
+	clearTerminal()
+
+	fmt.Println("\n Glimpse loading...")
+	// fmt.Println("This will make searches instant!\n")
+
+	progressCallback := func(current, total int) {
+		if total > 0 {
+			percentage := (current * 100) / total
+			fmt.Printf("\r  📂 Indexed %d/%d files (%d%%)  ", current, total, percentage)
+		}
+	}
+
+	index := search.BuildIndex(".", progressCallback)
+
+	// fmt.Printf("\r✓ Indexed %d files successfully!       \n", index.FileCount())
+	// fmt.Println("\n🚀 Starting interactive search...\n")
+	time.Sleep(1 * time.Second)
+
+	// Create model with index
+	model := tui.InitialModelWithIndex(index)
+
+	p := tea.NewProgram(model)
+	if _, err := p.Run(); err != nil {
+		log.Fatal(err)
+	}
+
+	clearTerminal()
+}
+
+func clearTerminal() {
+	var cmd *exec.Cmd
+
+	switch runtime.GOOS {
+	case "linux", "darwin":
+		cmd = exec.Command("clear")
+	case "windows":
+		cmd = exec.Command("cmd", "/c", "cls")
+	default:
+		fmt.Print("\033[2J\033[H")
+		return
+	}
+
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+}
